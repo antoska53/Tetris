@@ -5,8 +5,10 @@
 #include <QColor>
 #include <QPainter>
 #include <QKeyEvent>
+#include <QMessageBox>
+#include <QDebug>
 #include "figure.h"
-#define emptyCell QColor(150,150,150)//серыйцвет
+#define emptyCell QColor(Qt::gray)//серыйцвет
 
 class Glass : public QWidget
 {
@@ -43,11 +45,13 @@ int columns() const
     return m_columns;
 }
 void clearGlass();
+void acceptColors(int, int);
 
 virtual void paintEvent(QPaintEvent*event);
 
 signals:
     void signalGlassInit();
+    void drawPattern(Figure*&);
 
 
 public slots:

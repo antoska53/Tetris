@@ -27,12 +27,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     glass.cpp \
-    figure.cpp
+    figure.cpp \
+    nextfigure2.cpp
 
 HEADERS += \
         mainwindow.h \
     glass.h \
-    figure.h
+    figure.h \
+    nextfigure2.h
 
 FORMS += \
         mainwindow.ui

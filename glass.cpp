@@ -13,6 +13,7 @@ Glass::Glass(QWidget *parent) : QWidget(parent)
 
     cur = new Figure();
     next = new Figure();
+    //connect()
 
 }
 
@@ -53,14 +54,14 @@ void Glass::clearGlass(){
     for(int i = 0; i < m_rows; i++){
         for(int j = 0; j < m_columns; j++){
             glassArray[i].fill(emptyCell);
-            qDebug() << glassArray.value(i).value(j);
+          //  qDebug() << glassArray.value(i).value(j);
         }
     }
     for(int i = 0; i < m_rows; i++){
        // QColor qcol(Qt::blue);
         //glassArray.value(i).fill(qcol);
                 for(int j = 0; j < m_columns; j++){
-        qDebug() << "ПРоверка" << glassArray.value(i).value(j);
+       // qDebug() << "ПРоверка" << glassArray.value(i).value(j);
                 }
     }
 }
@@ -80,16 +81,29 @@ void Glass::paintEvent(QPaintEvent*event){
        y += 20;
 
     }
+    if(gameOn){
+         cur->paintFigure(painter);
+        //if(cur->getUpCellJ() == 19 || glassArray[cur->getUpCellJ() + 1][cur->getUpCellI() - 1] != emptyCell){
+         // acceptColors(cur->getUpCellI(), cur->getUpCellJ());
+        //}
+
+    }
 }
 
 void Glass::slotNewGame(){
+    qDebug() << "new game";
     gameOn = true;
     clearGlass();
     cur->makeRandomColors();
+    cur->setUpCell(5, 0);
     next->makeRandomColors();
+    next->setUpCell(5, 0);
+    emit drawPattern(next);
     this->setFocus();
-    startTimer(1);
+    idTimer = startTimer(500);
     repaint();
+    qDebug() << cur->getColorVec()[0];
+    qDebug() << idTimer;
 }
 
 void Glass::keyPressEvent(QKeyEvent* event){
@@ -105,21 +119,33 @@ void Glass::keyPressEvent(QKeyEvent* event){
     //если есть «куда», перемещаем фигурку влево
         i = cur->getUpCellI();
         j = cur->getUpCellJ();
-        cur->setUpCell(i - 20, j);
+        if(i > 1 && glassArray[j][i - 2] == Qt::gray) cur->setUpCell(i - 1, j);
+
         break;
     case Qt::Key_Right:
         i = cur->getUpCellI();
         j = cur->getUpCellJ();
-        cur->setUpCell(i + 20, j);
+        if(i < 9 && glassArray[j][i] == Qt::gray) cur->setUpCell(i + 1, j);
         break;
     case Qt::Key_Down:
     //циклически ”переливаем” цвета в фигурке сверху вниз
+        cur->rotateColors(0);
         break;
     case Qt::Key_Up:
     //циклически ”переливаем” цвета в фигурке снизу вверх
+        cur->rotateColors(1);
         break;
     case Qt::Key_Space:
     //«роняем» фигурку
+        i = cur->getUpCellI();
+        j = cur->getUpCellJ();
+        while(j < 20 && glassArray[j][i - 1] == Qt::gray){
+            //if(j == 19)break;
+            j++;
+
+        }
+       acceptColors(i, j - 1);
+        //cur->setUpCell(i, j);
         break;
     default:
     QWidget::keyPressEvent(event); //принажатиилюбыхдругихклавишвызываембазовуюобработкусобытия
@@ -135,8 +161,51 @@ void Glass::keyPressEvent(QKeyEvent* event){
 }
 
     void Glass::timerEvent(QTimerEvent* event){
+
        int i = cur->getUpCellI();
        int j = cur->getUpCellJ();
-       cur->setUpCell(i, j + 20);
-       repaint();
+       j++;
+       cur->setUpCell(i, j);
+        if(cur->getUpCellJ() >= 19 || glassArray[cur->getUpCellJ() + 1][cur->getUpCellI() - 1] != emptyCell){
+            if(j < 2){
+                QMessageBox::about(this, "game over", "гамовер");
+                killTimer(idTimer);
+            }
+            else {
+       glassArray[j].replace(i - 1, cur->getColorVec()[0]);
+       glassArray[j - 1].replace(i - 1, cur->getColorVec()[1]);
+       glassArray[j - 2].replace(i - 1, cur->getColorVec()[2]);
+       Figure* tmp = nullptr;
+       tmp = cur;
+       cur = next;
+       next = cur;
+       tmp = nullptr;
+       cur->setUpCell(5, 0);
+       next->setUpCell(5, 0);
+       next->makeRandomColors();
+       emit drawPattern(next);
+       }
+
+
+       }
+        repaint();
+
+    }
+
+    void Glass::acceptColors(int i, int j){
+        qDebug() << "i = " << i << "j = " << j;
+
+        glassArray[j].replace(i - 1, cur->getColorVec()[0]);
+        glassArray[j - 1].replace(i - 1, cur->getColorVec()[1]);
+        glassArray[j - 2].replace(i - 1, cur->getColorVec()[2]);
+        Figure* tmp;
+        tmp = cur;
+        cur = next;
+        next = cur;
+        tmp = nullptr;
+        cur->setUpCell(5, 0);
+        next->setUpCell(5, 0);
+        next->makeRandomColors();
+        emit drawPattern(next);
+
     }

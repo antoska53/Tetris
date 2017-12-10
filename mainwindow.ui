@@ -25,13 +25,8 @@
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="frame">
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
+       <widget class="NextFigure2" name="frame" native="true">
+        <zorder>widget</zorder>
        </widget>
       </item>
       <item>
@@ -124,7 +119,7 @@
     <property name="title">
      <string>Игра</string>
     </property>
-    <addaction name="action"/>
+    <addaction name="action_NewGame"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
@@ -141,11 +136,14 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action"/>
+   <addaction name="action_NewGame"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="action">
+  <action name="action_NewGame">
    <property name="text">
+    <string>&amp;Новая Игра</string>
+   </property>
+   <property name="toolTip">
     <string>Новая игра</string>
    </property>
   </action>
@@ -158,7 +156,17 @@
    <header>glass.h</header>
    <container>1</container>
    <slots>
+    <signal>drawPattern(Figure*)</signal>
     <slot>slotNewGame()</slot>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>NextFigure2</class>
+   <extends>QWidget</extends>
+   <header>nextfigure2.h</header>
+   <container>1</container>
+   <slots>
+    <slot>slotNextFigure(Figure*)</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -181,7 +189,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>action</sender>
+   <sender>action_NewGame</sender>
    <signal>triggered()</signal>
    <receiver>widget</receiver>
    <slot>slotNewGame()</slot>
@@ -193,6 +201,38 @@
     <hint type="destinationlabel">
      <x>199</x>
      <y>162</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButtonNew</sender>
+   <signal>clicked()</signal>
+   <receiver>action_NewGame</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>329</x>
+     <y>68</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>widget</sender>
+   <signal>drawPattern(Figure*)</signal>
+   <receiver>frame</receiver>
+   <slot>slotNextFigure(Figure*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>162</x>
+     <y>185</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>60</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>

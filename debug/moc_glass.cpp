@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Glass_t {
     QByteArrayData data[11];
-    char stringdata0[102];
+    char stringdata0[101];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,17 +35,17 @@ QT_MOC_LITERAL(0, 0, 5), // "Glass"
 QT_MOC_LITERAL(1, 6, 15), // "signalGlassInit"
 QT_MOC_LITERAL(2, 22, 0), // ""
 QT_MOC_LITERAL(3, 23, 11), // "drawPattern"
-QT_MOC_LITERAL(4, 35, 8), // "Figure*&"
-QT_MOC_LITERAL(5, 44, 11), // "slotNewGame"
-QT_MOC_LITERAL(6, 56, 7), // "setRows"
-QT_MOC_LITERAL(7, 64, 4), // "rows"
-QT_MOC_LITERAL(8, 69, 10), // "setColumns"
-QT_MOC_LITERAL(9, 80, 7), // "columns"
-QT_MOC_LITERAL(10, 88, 13) // "slotGlassInit"
+QT_MOC_LITERAL(4, 35, 7), // "Figure*"
+QT_MOC_LITERAL(5, 43, 11), // "slotNewGame"
+QT_MOC_LITERAL(6, 55, 7), // "setRows"
+QT_MOC_LITERAL(7, 63, 4), // "rows"
+QT_MOC_LITERAL(8, 68, 10), // "setColumns"
+QT_MOC_LITERAL(9, 79, 7), // "columns"
+QT_MOC_LITERAL(10, 87, 13) // "slotGlassInit"
 
     },
     "Glass\0signalGlassInit\0\0drawPattern\0"
-    "Figure*&\0slotNewGame\0setRows\0rows\0"
+    "Figure*\0slotNewGame\0setRows\0rows\0"
     "setColumns\0columns\0slotGlassInit"
 };
 #undef QT_MOC_LITERAL
@@ -115,7 +115,7 @@ void Glass::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
             }
         }
         {
-            typedef void (Glass::*_t)(Figure * & );
+            typedef void (Glass::*_t)(Figure * );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Glass::drawPattern)) {
                 *result = 1;
                 return;
@@ -206,7 +206,7 @@ void Glass::signalGlassInit()
 }
 
 // SIGNAL 1
-void Glass::drawPattern(Figure * & _t1)
+void Glass::drawPattern(Figure * _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);

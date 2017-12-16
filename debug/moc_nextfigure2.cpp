@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_NextFigure2_t {
     QByteArrayData data[4];
-    char stringdata0[37];
+    char stringdata0[36];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,10 +34,10 @@ static const qt_meta_stringdata_NextFigure2_t qt_meta_stringdata_NextFigure2 = {
 QT_MOC_LITERAL(0, 0, 11), // "NextFigure2"
 QT_MOC_LITERAL(1, 12, 14), // "slotNextFigure"
 QT_MOC_LITERAL(2, 27, 0), // ""
-QT_MOC_LITERAL(3, 28, 8) // "Figure*&"
+QT_MOC_LITERAL(3, 28, 7) // "Figure*"
 
     },
-    "NextFigure2\0slotNextFigure\0\0Figure*&"
+    "NextFigure2\0slotNextFigure\0\0Figure*"
 };
 #undef QT_MOC_LITERAL
 

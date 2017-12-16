@@ -98,6 +98,7 @@ void Glass::slotNewGame(){
     cur->setUpCell(5, 0);
     next->makeRandomColors();
     next->setUpCell(5, 0);
+    qDebug() << "sugnal" << next;
     emit drawPattern(next);
     this->setFocus();
     idTimer = startTimer(500);
@@ -178,7 +179,7 @@ void Glass::keyPressEvent(QKeyEvent* event){
        Figure* tmp = nullptr;
        tmp = cur;
        cur = next;
-       next = cur;
+       next = tmp;
        tmp = nullptr;
        cur->setUpCell(5, 0);
        next->setUpCell(5, 0);
@@ -201,7 +202,7 @@ void Glass::keyPressEvent(QKeyEvent* event){
         Figure* tmp;
         tmp = cur;
         cur = next;
-        next = cur;
+        next = tmp;
         tmp = nullptr;
         cur->setUpCell(5, 0);
         next->setUpCell(5, 0);

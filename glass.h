@@ -51,7 +51,7 @@ virtual void paintEvent(QPaintEvent*event);
 
 signals:
     void signalGlassInit();
-    void drawPattern(Figure*&);
+    void drawPattern(Figure*);
 
 
 public slots:

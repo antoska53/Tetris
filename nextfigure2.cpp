@@ -16,6 +16,7 @@ void NextFigure2::slotNextFigure(Figure*  next){
 
 void NextFigure2::paintEvent(QPaintEvent *event){
     QPainter painter(this);
+    //painter.fillRect(this->rect(), Qt::gray);
     if(nextF != nullptr){
     qDebug() << "painter" <<  nextF->getColorVec();
     painter.fillRect(40 ,0, 19, 19, nextF->getColorVec()[2]);

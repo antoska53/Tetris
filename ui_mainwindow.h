@@ -72,6 +72,7 @@ public:
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         label_2 = new QLabel(centralWidget);
         label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(label_2);
 
@@ -80,7 +81,7 @@ public:
 
         verticalLayout->addWidget(frame);
 
-        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Minimum);
+        verticalSpacer_2 = new QSpacerItem(20, 150, QSizePolicy::Minimum, QSizePolicy::Maximum);
 
         verticalLayout->addItem(verticalSpacer_2);
 
@@ -152,6 +153,7 @@ public:
         QObject::connect(action_NewGame, SIGNAL(triggered()), widget, SLOT(slotNewGame()));
         QObject::connect(pushButtonNew, SIGNAL(clicked()), action_NewGame, SLOT(trigger()));
         QObject::connect(widget, SIGNAL(drawPattern(Figure*)), frame, SLOT(slotNextFigure(Figure*)));
+        QObject::connect(widget, SIGNAL(setScore(int)), lcdNumber, SLOT(display(int)));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi

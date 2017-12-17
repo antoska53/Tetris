@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Glass_t {
-    QByteArrayData data[11];
-    char stringdata0[101];
+    QByteArrayData data[12];
+    char stringdata0[110];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,17 +36,18 @@ QT_MOC_LITERAL(1, 6, 15), // "signalGlassInit"
 QT_MOC_LITERAL(2, 22, 0), // ""
 QT_MOC_LITERAL(3, 23, 11), // "drawPattern"
 QT_MOC_LITERAL(4, 35, 7), // "Figure*"
-QT_MOC_LITERAL(5, 43, 11), // "slotNewGame"
-QT_MOC_LITERAL(6, 55, 7), // "setRows"
-QT_MOC_LITERAL(7, 63, 4), // "rows"
-QT_MOC_LITERAL(8, 68, 10), // "setColumns"
-QT_MOC_LITERAL(9, 79, 7), // "columns"
-QT_MOC_LITERAL(10, 87, 13) // "slotGlassInit"
+QT_MOC_LITERAL(5, 43, 8), // "setScore"
+QT_MOC_LITERAL(6, 52, 11), // "slotNewGame"
+QT_MOC_LITERAL(7, 64, 7), // "setRows"
+QT_MOC_LITERAL(8, 72, 4), // "rows"
+QT_MOC_LITERAL(9, 77, 10), // "setColumns"
+QT_MOC_LITERAL(10, 88, 7), // "columns"
+QT_MOC_LITERAL(11, 96, 13) // "slotGlassInit"
 
     },
     "Glass\0signalGlassInit\0\0drawPattern\0"
-    "Figure*\0slotNewGame\0setRows\0rows\0"
-    "setColumns\0columns\0slotGlassInit"
+    "Figure*\0setScore\0slotNewGame\0setRows\0"
+    "rows\0setColumns\0columns\0slotGlassInit"
 };
 #undef QT_MOC_LITERAL
 
@@ -56,36 +57,38 @@ static const uint qt_meta_data_Glass[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
-       2,   56, // properties
+       7,   14, // methods
+       2,   64, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       2,       // signalCount
+       3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   44,    2, 0x06 /* Public */,
-       3,    1,   45,    2, 0x06 /* Public */,
+       1,    0,   49,    2, 0x06 /* Public */,
+       3,    1,   50,    2, 0x06 /* Public */,
+       5,    1,   53,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,   48,    2, 0x0a /* Public */,
-       6,    1,   49,    2, 0x0a /* Public */,
-       8,    1,   52,    2, 0x0a /* Public */,
-      10,    0,   55,    2, 0x0a /* Public */,
+       6,    0,   56,    2, 0x0a /* Public */,
+       7,    1,   57,    2, 0x0a /* Public */,
+       9,    1,   60,    2, 0x0a /* Public */,
+      11,    0,   63,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 4,    2,
+    QMetaType::Void, QMetaType::Int,    2,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,    7,
-    QMetaType::Void, QMetaType::Int,    9,
+    QMetaType::Void, QMetaType::Int,    8,
+    QMetaType::Void, QMetaType::Int,   10,
     QMetaType::Void,
 
  // properties: name, type, flags
-       7, QMetaType::Int, 0x00095103,
-       9, QMetaType::Int, 0x00095103,
+       8, QMetaType::Int, 0x00095103,
+      10, QMetaType::Int, 0x00095103,
 
        0        // eod
 };
@@ -98,10 +101,11 @@ void Glass::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         switch (_id) {
         case 0: _t->signalGlassInit(); break;
         case 1: _t->drawPattern((*reinterpret_cast< Figure*(*)>(_a[1]))); break;
-        case 2: _t->slotNewGame(); break;
-        case 3: _t->setRows((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 4: _t->setColumns((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 5: _t->slotGlassInit(); break;
+        case 2: _t->setScore((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: _t->slotNewGame(); break;
+        case 4: _t->setRows((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 5: _t->setColumns((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 6: _t->slotGlassInit(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -118,6 +122,13 @@ void Glass::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
             typedef void (Glass::*_t)(Figure * );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Glass::drawPattern)) {
                 *result = 1;
+                return;
+            }
+        }
+        {
+            typedef void (Glass::*_t)(int );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Glass::setScore)) {
+                *result = 2;
                 return;
             }
         }
@@ -171,13 +182,13 @@ int Glass::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 7)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 6;
+        _id -= 7;
     }
 #ifndef QT_NO_PROPERTIES
    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
@@ -210,6 +221,13 @@ void Glass::drawPattern(Figure * _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
+}
+
+// SIGNAL 2
+void Glass::setScore(int _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

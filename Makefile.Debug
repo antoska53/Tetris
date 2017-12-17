@@ -17,13 +17,13 @@ CXXFLAGS      = -fno-keep-inline-dllexport -pipe -g -std=gnu++11 -Wextra -Wall -
 INCPATH       = -I. -I..\..\..\..\Qt\5.9.1\mingw53_32\include -I..\..\..\..\Qt\5.9.1\mingw53_32\include\QtWidgets -I..\..\..\..\Qt\5.9.1\mingw53_32\include\QtGui -I..\..\..\..\Qt\5.9.1\mingw53_32\include\QtANGLE -I..\..\..\..\Qt\5.9.1\mingw53_32\include\QtCore -Idebug -I. -I..\..\..\..\Qt\5.9.1\mingw53_32\mkspecs\win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-subsystem,windows -mthreads
-LIBS        =        -lmingw32 -LC:\Qt\5.9.1\mingw53_32\lib C:\Qt\5.9.1\mingw53_32\lib\libqtmaind.a -LC:\utils\my_sql\my_sql\lib -LC:\utils\postgresql\pgsql\lib -lshell32 C:\Qt\5.9.1\mingw53_32\lib\libQt5Widgetsd.a C:\Qt\5.9.1\mingw53_32\lib\libQt5Guid.a C:\Qt\5.9.1\mingw53_32\lib\libQt5Cored.a 
+LIBS        =        -lmingw32 -LC:\Qt\5.9.1\mingw53_32\lib C:\Qt\5.9.1\mingw53_32\lib\libqtmaind.a -LC:\utils\my_sql\my_sql\lib -LC:\utils\postgresql\pgsql\lib -lshell32 C:\Qt\5.9.1\mingw53_32\lib\libQt5Widgetsd.a C:\Qt\5.9.1\mingw53_32\lib\libQt5Guid.a C:\Qt\5.9.1\mingw53_32\lib\libQt5Cored.a debug\Tetris_res.o 
 QMAKE         = C:\Qt\5.9.1\mingw53_32\bin\qmake.exe
 IDC           = idc
 IDL           = midl
 ZIP           = zip -r -9
 DEF_FILE      = 
-RES_FILE      = 
+RES_FILE      = debug\Tetris_res.o
 COPY          = copy /y
 SED           = $(QMAKE) -install sed
 COPY_FILE     = copy /y
@@ -70,17 +70,20 @@ DIST          =  mainwindow.h \
 		figure.cpp \
 		nextfigure2.cpp
 QMAKE_TARGET  = Tetris
-DESTDIR        = debug\ #avoid trailing-slash linebreak
+DESTDIR        = exe\ #avoid trailing-slash linebreak
 TARGET         = Tetris.exe
-DESTDIR_TARGET = debug\Tetris.exe
+DESTDIR_TARGET = exe\Tetris.exe
 
 ####### Build rules
 
 first: all
 all: Makefile.Debug  $(DESTDIR_TARGET)
 
-$(DESTDIR_TARGET): ui_mainwindow.h $(OBJECTS) 
+$(DESTDIR_TARGET): ui_mainwindow.h $(OBJECTS) debug/Tetris_res.o
 	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) $(OBJECTS)  $(LIBS)
+
+debug/Tetris_res.o: Tetris.rc
+	windres -i Tetris.rc -o debug\Tetris_res.o --include-dir=. $(DEFINES)
 
 qmake: FORCE
 	@$(QMAKE) -o Makefile.Debug Tetris.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -92,6 +95,7 @@ dist:
 
 clean: compiler_clean 
 	-$(DEL_FILE) debug\main.o debug\mainwindow.o debug\glass.o debug\figure.o debug\nextfigure2.o debug\moc_mainwindow.o debug\moc_glass.o debug\moc_nextfigure2.o
+	-$(DEL_FILE) debug\Tetris_res.o
 
 distclean: clean 
 	-$(DEL_FILE) .qmake.stash
@@ -444,6 +448,14 @@ debug/moc_nextfigure2.cpp: ../../../../Qt/5.9.1/mingw53_32/include/QtWidgets/QWi
 		../../../../Qt/5.9.1/mingw53_32/include/QtCore/qfiledevice.h \
 		../../../../Qt/5.9.1/mingw53_32/include/QtGui/qvector2d.h \
 		../../../../Qt/5.9.1/mingw53_32/include/QtGui/qtouchdevice.h \
+		../../../../Qt/5.9.1/mingw53_32/include/QtCore/QDebug \
+		figure.h \
+		../../../../Qt/5.9.1/mingw53_32/include/QtCore/QVector \
+		../../../../Qt/5.9.1/mingw53_32/include/QtGui/QColor \
+		../../../../Qt/5.9.1/mingw53_32/include/QtGui/QPainter \
+		../../../../Qt/5.9.1/mingw53_32/include/QtGui/qpainter.h \
+		../../../../Qt/5.9.1/mingw53_32/include/QtGui/qtextoption.h \
+		../../../../Qt/5.9.1/mingw53_32/include/QtGui/qpen.h \
 		nextfigure2.h \
 		debug/moc_predefs.h \
 		../../../../Qt/5.9.1/mingw53_32/bin/moc.exe
@@ -669,7 +681,15 @@ ui_mainwindow.h: mainwindow.ui \
 		../../../../Qt/5.9.1/mingw53_32/include/QtCore/qfile.h \
 		../../../../Qt/5.9.1/mingw53_32/include/QtCore/qfiledevice.h \
 		../../../../Qt/5.9.1/mingw53_32/include/QtGui/qvector2d.h \
-		../../../../Qt/5.9.1/mingw53_32/include/QtGui/qtouchdevice.h
+		../../../../Qt/5.9.1/mingw53_32/include/QtGui/qtouchdevice.h \
+		../../../../Qt/5.9.1/mingw53_32/include/QtCore/QDebug \
+		figure.h \
+		../../../../Qt/5.9.1/mingw53_32/include/QtCore/QVector \
+		../../../../Qt/5.9.1/mingw53_32/include/QtGui/QColor \
+		../../../../Qt/5.9.1/mingw53_32/include/QtGui/QPainter \
+		../../../../Qt/5.9.1/mingw53_32/include/QtGui/qpainter.h \
+		../../../../Qt/5.9.1/mingw53_32/include/QtGui/qtextoption.h \
+		../../../../Qt/5.9.1/mingw53_32/include/QtGui/qpen.h
 	C:\Qt\5.9.1\mingw53_32\bin\uic.exe mainwindow.ui -o ui_mainwindow.h
 
 compiler_yacc_decl_make_all:
@@ -968,7 +988,7 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../../../Qt/5.9.1/mingw53_32/include/QtCore/QDebug \
 		figure.h \
 		../../../../Qt/5.9.1/mingw53_32/include/QtCore/QVector \
-		nextfigure.h
+		nextfigure2.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o mainwindow.cpp
 
 debug/glass.o: glass.cpp glass.h \
@@ -1273,7 +1293,15 @@ debug/nextfigure2.o: nextfigure2.cpp nextfigure2.h \
 		../../../../Qt/5.9.1/mingw53_32/include/QtCore/qfile.h \
 		../../../../Qt/5.9.1/mingw53_32/include/QtCore/qfiledevice.h \
 		../../../../Qt/5.9.1/mingw53_32/include/QtGui/qvector2d.h \
-		../../../../Qt/5.9.1/mingw53_32/include/QtGui/qtouchdevice.h
+		../../../../Qt/5.9.1/mingw53_32/include/QtGui/qtouchdevice.h \
+		../../../../Qt/5.9.1/mingw53_32/include/QtCore/QDebug \
+		figure.h \
+		../../../../Qt/5.9.1/mingw53_32/include/QtCore/QVector \
+		../../../../Qt/5.9.1/mingw53_32/include/QtGui/QColor \
+		../../../../Qt/5.9.1/mingw53_32/include/QtGui/QPainter \
+		../../../../Qt/5.9.1/mingw53_32/include/QtGui/qpainter.h \
+		../../../../Qt/5.9.1/mingw53_32/include/QtGui/qtextoption.h \
+		../../../../Qt/5.9.1/mingw53_32/include/QtGui/qpen.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\nextfigure2.o nextfigure2.cpp
 
 debug/moc_mainwindow.o: debug/moc_mainwindow.cpp 

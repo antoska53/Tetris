@@ -92,7 +92,12 @@ void Glass::paintEvent(QPaintEvent*event){
 
 void Glass::slotNewGame(){
     qDebug() << "new game";
+    if(gameOn){
+        killTimer(idTimer);
+        gameOn = false;
+    }
     gameOn = true;
+    score = 0;
     clearGlass();
     cur->makeRandomColors();
     cur->setUpCell(5, 0);
@@ -176,6 +181,7 @@ void Glass::keyPressEvent(QKeyEvent* event){
        glassArray[j].replace(i - 1, cur->getColorVec()[0]);
        glassArray[j - 1].replace(i - 1, cur->getColorVec()[1]);
        glassArray[j - 2].replace(i - 1, cur->getColorVec()[2]);
+       this->removeLine();
        Figure* tmp = nullptr;
        tmp = cur;
        cur = next;
@@ -185,6 +191,7 @@ void Glass::keyPressEvent(QKeyEvent* event){
        next->setUpCell(5, 0);
        next->makeRandomColors();
        emit drawPattern(next);
+
        }
 
 
@@ -193,12 +200,57 @@ void Glass::keyPressEvent(QKeyEvent* event){
 
     }
 
+    void Glass::removeLine(){
+        int n = 0;
+
+        for(int i = 0; i < glassArray.count(); i++ ){  //по горизонтали
+            for(int j = 0; j < glassArray[i].count() - 1; j++){
+                if(glassArray[i][j] == glassArray[i][j + 1] && glassArray[i][j] != emptyCell){
+                    n++;
+                }
+                else if(n >= 2){
+                    for(int m = i; m > 0; m--){
+                        for(int k = j; k >= j - n; k--){
+                        glassArray[m][k] = glassArray[m - 1][k];
+                    }
+
+                }
+                     score += n + 1;
+                    emit setScore(score);
+                    n = 0;
+                }
+                else n = 0;
+
+            }
+        }
+
+        n = 0;
+        for(int j = 0; j < glassArray[0].count(); j++){        //по вертикали
+            for(int i = 0; i < glassArray.count() - 1; i++){
+                if(glassArray[i][j] == glassArray[i + 1][j] && glassArray[i][j] != emptyCell){
+                    n++;
+                }
+                else if(n >= 2){
+                    for(int m = i; m - n > 0; m--){
+                        glassArray[m][j] = glassArray[m - n - 1][j];
+
+                    }
+                    score += n + 1;
+                    emit setScore(score);
+                    n = 0;
+                }
+                else n = 0;
+            }
+        }
+    }
+
     void Glass::acceptColors(int i, int j){
         qDebug() << "i = " << i << "j = " << j;
 
         glassArray[j].replace(i - 1, cur->getColorVec()[0]);
         glassArray[j - 1].replace(i - 1, cur->getColorVec()[1]);
         glassArray[j - 2].replace(i - 1, cur->getColorVec()[2]);
+        this->removeLine();
         Figure* tmp;
         tmp = cur;
         cur = next;

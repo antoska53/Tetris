@@ -40,3 +40,7 @@ FORMS += \
         mainwindow.ui
 
 CONFIG += C++11
+
+RC_FILE = Tetris.rc
+
+DESTDIR = ./exe

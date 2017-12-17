@@ -34,6 +34,7 @@ public:
     // static QColor emptyCell = QColor(Qt::gray);
     virtual void keyPressEvent(QKeyEvent*);
     virtual void timerEvent(QTimerEvent*);
+    void removeLine();
 
 int rows() const
 {
@@ -52,6 +53,7 @@ virtual void paintEvent(QPaintEvent*event);
 signals:
     void signalGlassInit();
     void drawPattern(Figure*);
+    void setScore(int);
 
 
 public slots:

@@ -174,6 +174,7 @@ void Glass::keyPressEvent(QKeyEvent* event){
        cur->setUpCell(i, j);
         if(cur->getUpCellJ() >= 19 || glassArray[cur->getUpCellJ() + 1][cur->getUpCellI() - 1] != emptyCell){
             if(j < 2){
+                gameOn = false;
                 QMessageBox::about(this, "game over", "гамовер");
                 killTimer(idTimer);
             }
@@ -247,6 +248,14 @@ void Glass::keyPressEvent(QKeyEvent* event){
     void Glass::acceptColors(int i, int j){
         qDebug() << "i = " << i << "j = " << j;
 
+        if(j >= 19 || glassArray[j + 1][i - 1] != emptyCell){
+            if(j < 2){
+                gameOn = false;
+                QMessageBox::about(this, "game over", "гамовер");
+                killTimer(idTimer);
+            }
+            else {
+
         glassArray[j].replace(i - 1, cur->getColorVec()[0]);
         glassArray[j - 1].replace(i - 1, cur->getColorVec()[1]);
         glassArray[j - 2].replace(i - 1, cur->getColorVec()[2]);
@@ -261,4 +270,6 @@ void Glass::keyPressEvent(QKeyEvent* event){
         next->makeRandomColors();
         emit drawPattern(next);
 
+    }
+   }
     }
